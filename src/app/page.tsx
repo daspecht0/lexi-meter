@@ -39,8 +39,8 @@ export default function Home() {
   }, []);
 
   const currentValue = meterData?.value ?? 50;
-  const note = meterData?.note ?? null;
-  const updatedAt = meterData?.updated_at ?? null;
+  const note = meterData?.note;
+  const updatedAt = meterData?.updated_at;
 
   return (
     <main className="min-h-screen py-12 px-4">

@@ -43,21 +43,28 @@ async function setupDatabase() {
 
   // Check if Lexi user exists, create if not
   const lexiEmail = process.env.LEXI_EMAIL;
-  if (lexiEmail) {
+  const lexiPassword = process.env.LEXI_INITIAL_PASSWORD;
+
+  if (lexiEmail && lexiPassword) {
+    if (lexiPassword.length < 12) {
+      console.error("ERROR: LEXI_INITIAL_PASSWORD must be at least 12 characters");
+      process.exit(1);
+    }
     const existing = await sql`SELECT * FROM users WHERE email = ${lexiEmail}`;
     if (existing.rows.length === 0) {
-      // Generate a random password for first-time setup
-      const tempPassword = "changeme123";
-      const passwordHash = await bcrypt.hash(tempPassword, 10);
+      const passwordHash = await bcrypt.hash(lexiPassword, 10);
       await sql`
         INSERT INTO users (email, password_hash, name, role)
         VALUES (${lexiEmail}, ${passwordHash}, 'Lexi', 'lexi')
       `;
       console.log(`Created Lexi user with email: ${lexiEmail}`);
-      console.log(`IMPORTANT: Default password is "changeme123" - change this!`);
     } else {
       console.log("Lexi user already exists");
     }
+  } else if (lexiEmail && !lexiPassword) {
+    console.error("ERROR: LEXI_INITIAL_PASSWORD environment variable is required");
+    console.error("Set a secure password (min 12 characters) before running db:push");
+    process.exit(1);
   } else {
     console.log("LEXI_EMAIL not set - skipping Lexi user creation");
   }

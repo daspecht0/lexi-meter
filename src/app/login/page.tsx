@@ -46,7 +46,7 @@ export default function LoginPage() {
               LEXI METER
             </h1>
           </Link>
-          <p className="text-white/60 mt-2">Lexi's Control Panel</p>
+          <p className="text-white/60 mt-2">Lexi&apos;s Control Panel</p>
         </div>
 
         {/* Login Form */}

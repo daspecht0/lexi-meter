@@ -131,7 +131,7 @@ export default function Meter({
         </div>
         {note && (
           <div className="mt-4 p-4 bg-white/10 rounded-lg text-white/80 italic">
-            "{note}"
+            &ldquo;{note}&rdquo;
           </div>
         )}
       </div>

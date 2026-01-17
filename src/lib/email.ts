@@ -1,8 +1,14 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const FROM_EMAIL = "Lexi Meter <onboarding@resend.dev>";
+
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("RESEND_API_KEY environment variable is not configured");
+  }
+  return new Resend(apiKey);
+}
 
 export async function sendDailyReminder(currentValue: number) {
   const lexiEmail = process.env.LEXI_EMAIL;
@@ -14,7 +20,7 @@ export async function sendDailyReminder(currentValue: number) {
   const dashboardUrl = `${process.env.NEXTAUTH_URL}/dashboard`;
 
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: lexiEmail,
       subject: "How mad are you today? Update your meter!",
@@ -60,7 +66,7 @@ export async function sendBountyPostedNotification(
   }
 
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: userEmail,
       subject: `New Bounty Posted: ${title}`,
@@ -104,7 +110,7 @@ export async function sendBountyCompletedNotification(
   }
 
   try {
-    const { data, error } = await resend.emails.send({
+    const { data, error } = await getResendClient().emails.send({
       from: FROM_EMAIL,
       to: userEmail,
       subject: `Bounty Completed: ${title}`,
