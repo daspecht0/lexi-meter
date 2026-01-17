@@ -1,21 +1,42 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Meter from "@/components/Meter";
 import BountyCard from "@/components/BountyCard";
-import { getCurrentMeter, getOpenBounties } from "@/lib/db";
 import Link from "next/link";
+import type { MeterReading, Bounty } from "@/types";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export default function Home() {
+  const [meterData, setMeterData] = useState<MeterReading | null>(null);
+  const [bounties, setBounties] = useState<Bounty[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-export default async function Home() {
-  let meterData: Awaited<ReturnType<typeof getCurrentMeter>> = null;
-  let bounties: Awaited<ReturnType<typeof getOpenBounties>> = [];
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [meterRes, bountiesRes] = await Promise.all([
+          fetch("/api/meter"),
+          fetch("/api/bounties?open=true"),
+        ]);
 
-  try {
-    meterData = await getCurrentMeter();
-    bounties = await getOpenBounties();
-  } catch (error) {
-    console.error("Failed to fetch data:", error);
-  }
+        if (meterRes.ok) {
+          const data = await meterRes.json();
+          setMeterData(data);
+        }
+
+        if (bountiesRes.ok) {
+          const data = await bountiesRes.json();
+          setBounties(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   const currentValue = meterData?.value ?? 50;
   const note = meterData?.note ?? null;
@@ -35,7 +56,11 @@ export default async function Home() {
 
       {/* Main Meter */}
       <section className="mb-16">
-        <Meter value={currentValue} note={note} updatedAt={updatedAt} />
+        {isLoading ? (
+          <div className="text-center text-white/50 animate-pulse">Loading meter...</div>
+        ) : (
+          <Meter value={currentValue} note={note} updatedAt={updatedAt} />
+        )}
       </section>
 
       {/* Bounties Section */}
