@@ -96,7 +96,6 @@ export async function updateBountyStatus(
   id: number,
   status: BountyStatus
 ): Promise<Bounty | null> {
-  const completedAt = status === "completed" ? "NOW()" : null;
   const result = await sql<Bounty>`
     UPDATE bounties
     SET status = ${status},

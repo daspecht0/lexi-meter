@@ -7,8 +7,8 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function Home() {
-  let meterData = null;
-  let bounties = [];
+  let meterData: Awaited<ReturnType<typeof getCurrentMeter>> = null;
+  let bounties: Awaited<ReturnType<typeof getOpenBounties>> = [];
 
   try {
     meterData = await getCurrentMeter();
