@@ -11,14 +11,7 @@
 }
 
 body {
-  background: linear-gradient(
-    135deg,
-    #050208 0%,
-    #030206 25%,
-    #040408 50%,
-    #03050a 75%,
-    #050208 100%
-  );
+  background-color: #4a1a6b;
   min-height: 100vh;
 }
 

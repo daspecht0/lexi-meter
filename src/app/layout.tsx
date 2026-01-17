@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
+import CursorTrail from "@/components/CursorTrail";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} wild-bg dots-pattern min-h-screen`}>
-        <Providers>{children}</Providers>
+      <body className={`${inter.className} min-h-screen`}>
+        <Providers>
+          <CursorTrail />
+          {children}
+        </Providers>
       </body>
     </html>
   );
