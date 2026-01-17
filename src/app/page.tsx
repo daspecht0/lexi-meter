@@ -81,12 +81,13 @@ export default function Home() {
       )}
 
       {/* Login link for Lexi */}
-      <footer className="fixed bottom-4 right-4">
+      <footer className="mt-16 text-center">
         <Link
           href="/login"
-          className="text-white/30 hover:text-white/60 text-sm transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 border border-white/20 text-white/70 hover:text-white hover:bg-white/20 transition-all"
         >
-          Lexi Login
+          <span>Lexi Login</span>
+          <span className="text-lg">→</span>
         </Link>
       </footer>
     </main>
