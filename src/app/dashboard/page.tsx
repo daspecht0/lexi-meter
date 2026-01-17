@@ -124,7 +124,7 @@ export default function DashboardPage() {
 
   if (status === "loading" || isLoading) {
     return (
-      <main className="min-h-screen flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center relative z-10">
         <div className="text-white text-2xl animate-pulse">Loading...</div>
       </main>
     );
@@ -132,7 +132,7 @@ export default function DashboardPage() {
 
   if (session?.user?.role !== "lexi") {
     return (
-      <main className="min-h-screen flex items-center justify-center">
+      <main className="min-h-screen flex items-center justify-center relative z-10">
         <div className="text-center">
           <div className="text-6xl mb-4">🚫</div>
           <h1 className="text-2xl text-white mb-4">Access Denied</h1>
@@ -157,7 +157,7 @@ export default function DashboardPage() {
   const completedBounties = bounties.filter((b) => b.status === "completed");
 
   return (
-    <main className="min-h-screen py-8 px-4">
+    <main className="min-h-screen py-8 px-4 relative z-10">
       {/* Header */}
       <header className="flex justify-between items-center mb-8 max-w-4xl mx-auto">
         <Link href="/">

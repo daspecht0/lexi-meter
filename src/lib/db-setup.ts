@@ -1,3 +1,6 @@
+import { config } from "dotenv";
+config({ path: ".env.local" });
+
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcryptjs";
 

@@ -43,7 +43,7 @@ export default function Home() {
   const updatedAt = meterData?.updated_at;
 
   return (
-    <main className="min-h-screen py-12 px-4">
+    <main className="min-h-screen py-12 px-4 relative z-10">
       {/* Header */}
       <header className="text-center mb-12">
         <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-goodles-pink via-goodles-yellow to-goodles-orange bg-clip-text text-transparent animate-pulse-slow text-glow">
